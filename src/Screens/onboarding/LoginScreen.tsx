@@ -36,6 +36,7 @@ function LoginScreen() {
           alt="logo"
           className="md:h-12 md:w-12 q -ml-10 mt-7"
         />
+
         <h1 className="text-3xl mt-2 font-semibold z-30">Create an account</h1>
         <div className="mt-8 z-30">
           {/* tabs */}
@@ -205,7 +206,7 @@ function Login() {
                           {showPassword ? "Hide" : "Show"}
                         </div>
                       }
-                      className="placeholder:tracking-[30px] pt-4"
+                      className="pt-4"
                     />
                   </FormControl>
                   <FormMessage />
