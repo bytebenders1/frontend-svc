@@ -22,6 +22,8 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import { Lock, Sms } from "iconsax-react";
+import Link from "next/link";
+import { Checkbox } from "@/src/components/ui/checkbox";
 
 function LoginScreen() {
   return (
@@ -34,8 +36,8 @@ function LoginScreen() {
           alt="logo"
           className="md:h-12 md:w-12 q"
         />
-        <h1 className="text-3xl mt-2 font-semibold">Create an account</h1>
-        <div className="mt-8 z-10">
+        <h1 className="text-3xl mt-2 font-semibold z-30">Create an account</h1>
+        <div className="mt-8 z-30">
           {/* tabs */}
           <TabComp />
         </div>
@@ -55,12 +57,8 @@ function TabComp() {
   return (
     <Tabs defaultValue="account" className="w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger onClick={() => onTrigger("account")} value="account">
-          Account
-        </TabsTrigger>
-        <TabsTrigger onClick={() => onTrigger("account")} value="password">
-          Password
-        </TabsTrigger>
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
         <Login />
@@ -83,8 +81,6 @@ function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      // email: 'michael.esenwa@gmail.com',
-      // password: 'Test1234@',
       email: "",
       password: "",
     },
@@ -103,7 +99,7 @@ function Login() {
                   <Input
                     placeholder="joseph@mail.com"
                     {...field}
-                    leftIcon={<Sms size="20" variant="Bold" color="gray" />}
+                    // leftIcon={<Sms size="20" variant="Bold" color="gray" />}
                     className="!rounded-lg"
                   />
                 </FormControl>
@@ -121,7 +117,7 @@ function Login() {
                     <Input
                       placeholder="********"
                       {...field}
-                      leftIcon={<Lock size="20" variant="Bold" color="gray" />}
+                      //   leftIcon={<Lock size="20" variant="Bold" color="gray" />}
                       type={showPassword ? "text" : "password"}
                       rightIcon={
                         <div
@@ -140,29 +136,26 @@ function Login() {
             }}
           />
 
-          <span className="text-xs font-normal mt-4">
-            Your password must be at least 8 character long, including 1 capital
-            latter and 1 number
-          </span>
-          {/* <div className='flex justify-between'>
-              <div className='flex items-center gap-3'>
-                <Checkbox id='checkbox' name='checkbox' />
-                <label
-                  htmlFor='checkbox'
-                  className='text-black text-sm font-bold'
-                >
-                  Remember me
-                </label>
-              </div>
-              <Link
-                href='/forgot-password'
-                className='text-black text-sm font-bold hover:underline'
+          <div className="flex justify-between -mt-2">
+            <div className="flex items-center gap-3">
+              <Checkbox id="checkbox" name="checkbox" />
+              <label
+                htmlFor="checkbox"
+                className="text-secondary text-sm font-semibold"
               >
-                Forgot Password?
-              </Link>
-            </div> */}
+                Remember for 30 days
+              </label>
+            </div>
+            <Link
+              href="/forgot-password"
+              className="text-primary text-sm font-semibold hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </form>
       </Form>
+
       {/* <div className='mt-10' /> */}
       <Button
         type="button"
@@ -171,6 +164,20 @@ function Login() {
         //   disabled={isPending}
       >
         Login
+      </Button>
+      <div className="w-full flex items-center justify-between mt-4">
+        <div className="w-[40%] h-px bg-gray-300"></div>
+        <p>OR</p>
+        <div className="w-[40%] h-px  bg-gray-300"></div>
+      </div>
+      <Button
+        type="button"
+        variant={"outline"}
+        className="w-full h-12 z-[9999] hover:bg-primary30 rounded-lg text-primary mt-6"
+        //   onClick={form.handleSubmit(onSubmit)}
+        //   disabled={isPending}
+      >
+        Connect wallet
       </Button>
     </div>
   );

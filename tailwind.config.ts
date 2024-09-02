@@ -22,7 +22,10 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      colors: {},
+      colors: {
+        primary: "#15A588",
+        secondary: "#344054",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
