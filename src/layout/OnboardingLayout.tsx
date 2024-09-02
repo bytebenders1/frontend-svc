@@ -15,7 +15,7 @@ function OnboardingLayout({
       </div>
       <Image
         src="/images/backgroundpattern.png"
-        className="absolute top-2 left:[10%] lg:left-[20%]"
+        className="absolute top-2 left:[10%] md:left-[8%] lg:left-[20%]"
         alt="pattern"
         width={768}
         height={768}
