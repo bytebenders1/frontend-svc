@@ -29,13 +29,6 @@ function LoginScreen() {
   return (
     <OnboardingLayout>
       <div className="h-[95%] md:h-[73%] w-11/12 md:w-8/12 flex flex-col items-center">
-        <Image
-          src="/images/Logomark.svg"
-          width="48"
-          height={48}
-          alt="logo"
-          className="md:h-12 md:w-12 q"
-        />
         <h1 className="text-3xl mt-2 font-semibold z-30">Create an account</h1>
         <div className="mt-8 z-30">
           {/* tabs */}
@@ -64,7 +57,7 @@ function TabComp() {
         <Login />
       </TabsContent>
       <TabsContent value="password">
-        <div>password</div>
+        <Register />
       </TabsContent>
     </Tabs>
   );
@@ -127,7 +120,7 @@ function Login() {
                           {showPassword ? "Hide" : "Show"}
                         </div>
                       }
-                      className="placeholder:tracking-[30px] pt-4"
+                      className="pt-4"
                     />
                   </FormControl>
                   <FormMessage />
@@ -164,6 +157,135 @@ function Login() {
         //   disabled={isPending}
       >
         Login
+      </Button>
+      <div className="w-full flex items-center justify-between mt-4">
+        <div className="w-[40%] h-px bg-gray-300"></div>
+        <p>OR</p>
+        <div className="w-[40%] h-px  bg-gray-300"></div>
+      </div>
+      <Button
+        type="button"
+        variant={"outline"}
+        className="w-full h-12 z-[9999] hover:bg-primary30 rounded-lg text-primary mt-6"
+        //   onClick={form.handleSubmit(onSubmit)}
+        //   disabled={isPending}
+      >
+        Connect wallet
+      </Button>
+    </div>
+  );
+}
+
+const signUpFormSchema = z.object({
+  email: z.string().email("Enter a valid email address."),
+  password: z.string().min(1, {
+    message: "Password is required",
+  }),
+  confirmPassword: z.string().min(1, {
+    message: "Confirm password is required",
+  }),
+});
+
+function Register() {
+  const [showPassword, setShowPassword] = useState(false);
+  const form = useForm<z.infer<typeof signUpFormSchema>>({
+    resolver: zodResolver(signUpFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  return (
+    <div className="mt-8">
+      <Form {...form}>
+        <form className="space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="joseph@mail.com"
+                    {...field}
+                    // leftIcon={<Sms size="20" variant="Bold" color="gray" />}
+                    className="!rounded-lg"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="********"
+                      {...field}
+                      //   leftIcon={<Lock size="20" variant="Bold" color="gray" />}
+                      type={showPassword ? "text" : "password"}
+                      rightIcon={
+                        <div
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          className="cursor-pointer hover:scale-105"
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </div>
+                      }
+                      className="placeholder:tracking-[30px] pt-4"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="********"
+                      {...field}
+                      //   leftIcon={<Lock size="20" variant="Bold" color="gray" />}
+                      type={showPassword ? "text" : "password"}
+                      rightIcon={
+                        <div
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          className="cursor-pointer hover:scale-105"
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </div>
+                      }
+                      className="pt-4"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+        </form>
+      </Form>
+
+      {/* <div className='mt-10' /> */}
+      <Button
+        type="button"
+        className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-10"
+        //   onClick={form.handleSubmit(onSubmit)}
+        //   disabled={isPending}
+      >
+        Sign Up
       </Button>
       <div className="w-full flex items-center justify-between mt-4">
         <div className="w-[40%] h-px bg-gray-300"></div>
