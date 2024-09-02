@@ -10,7 +10,7 @@ function OnboardingLayout({
   return (
     <div className="h-full bg-white w-full">
       <Nav />
-      <div className="px-8 md:px-28 flex items-center justify-center h-[91.5vh] bg-black">
+      <div className="px-8 md:px-28 flex items-center justify-center h-[91.5vh]">
         {children}
       </div>
       <Image
