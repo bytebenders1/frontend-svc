@@ -24,19 +24,12 @@ import {
 import { Lock, Sms } from "iconsax-react";
 import Link from "next/link";
 import { Checkbox } from "@/src/components/ui/checkbox";
+import StepsContainer from "@/src/components/reuseables/stepSlider";
 
 function LoginScreen() {
   return (
     <OnboardingLayout>
       <div className="h-[95%] md:h-[73%] w-11/12 md:w-8/12 flex flex-col items-center">
-        <Image
-          src="/images/Logomark.svg"
-          width="48"
-          height={48}
-          alt="logo"
-          className="md:h-12 md:w-12 q -ml-10 mt-7"
-        />
-
         <h1 className="text-3xl mt-2 font-semibold z-30">Create an account</h1>
         <div className="mt-8 z-30">
           {/* tabs */}
@@ -50,19 +43,17 @@ function LoginScreen() {
 export default LoginScreen;
 
 function TabComp() {
-  const [activeTab, setActiveTab] = useState("account");
-
-  const onTrigger = (tab: string) => {
-    setActiveTab(tab);
-  };
   return (
-    <Tabs defaultValue="signUp" className="w-[400px]">
+    <Tabs defaultValue="signUp" className="w-[90vw] md:w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="signUp">Sign up</TabsTrigger>
         <TabsTrigger value="Login">Log in</TabsTrigger>
       </TabsList>
       <TabsContent value="signUp">
-        <SignUp />
+        <StepsContainer done={() => {}}>
+          <SignUp />
+          <ChoosePassword />
+        </StepsContainer>
       </TabsContent>
       <TabsContent value="Login">
         <Login />
@@ -77,7 +68,7 @@ const formSchema = z.object({
     message: "Password is required",
   }),
 });
-function SignUp() {
+function SignUp(props: any) {
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -117,6 +108,7 @@ function SignUp() {
         className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-4"
         //   onClick={form.handleSubmit(onSubmit)}
         //   disabled={isPending}
+        onClick={() => props.next()}
       >
         Get Started
       </Button>
@@ -136,21 +128,21 @@ function SignUp() {
       </Button>
 
       <div className="flex space-x-2 my-4 justify-center">
-            <div className="flex items-center gap-3">
-              <label
-                htmlFor="checkbox"
-                className="text-secondary text-sm font-semibold"
-              >
-                Already have an account? 
-              </label>
-            </div>
-            <Link
-              href="/login"
-              className="text-primary text-sm font-semibold hover:underline"
-            >
-              Log in
-            </Link>
-          </div>
+        <div className="flex items-center gap-3">
+          <label
+            htmlFor="checkbox"
+            className="text-secondary text-sm font-semibold"
+          >
+            Already have an account?
+          </label>
+        </div>
+        <Link
+          href="/login"
+          className="text-primary text-sm font-semibold hover:underline"
+        >
+          Log in
+        </Link>
+      </div>
     </div>
   );
 }
@@ -260,21 +252,34 @@ function Login() {
       </Button>
 
       <div className="flex space-x-2 my-4 justify-center  ">
-            <div className="flex items-center gap-3">
-              <label
-                htmlFor="checkbox"
-                className="text-secondary text-sm font-semibold"
-              >
-                Don&rsquo;t have an account?
-              </label>
-            </div>
-            <Link
-              href="/login"
-              className="text-primary text-sm font-semibold hover:underline"
-            >
-              Sign Up
-            </Link>
-          </div>
+        <div className="flex items-center gap-3">
+          <label
+            htmlFor="checkbox"
+            className="text-secondary text-sm font-semibold"
+          >
+            Don&rsquo;t have an account?
+          </label>
+        </div>
+        <Link
+          href="/login"
+          className="text-primary text-sm font-semibold hover:underline"
+        >
+          Sign Up
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function ChoosePassword(props: any) {
+  return (
+    <div className="flex gap-5 items-center">
+      <div className="" onClick={() => props.back()}>
+        Back
+      </div>
+      <div className="" onClick={() => props.back()}>
+        Next
+      </div>
     </div>
   );
 }

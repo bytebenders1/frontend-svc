@@ -12,7 +12,7 @@ function OnboardingLayout({
       <div className="relative flex items-center justify-center">
         <Image
           src="/images/logo2.png"
-          className="absolute top-2 left:[10%] md:left-[3%] lg:left-[14%] xl:left-[23%]"
+          className="absolute -top-8 md:-top-5 xl:-top-20 left-[0%] md:left-[3%] lg:left-[14%] xl:left-[23%]"
           alt="pattern"
           width={768}
           height={768}
