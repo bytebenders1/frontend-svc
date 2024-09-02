@@ -10,7 +10,9 @@ function OnboardingLayout({
   return (
     <div className="h-full bg-white w-full">
       <Nav />
-      {children}
+      <div className="px-8 md:px-28 flex items-center justify-center h-[91.5vh] bg-black">
+        {children}
+      </div>
       <Image
         src="/images/backgroundpattern.png"
         className="absolute top-2 left:[10%] lg:left-[20%]"
