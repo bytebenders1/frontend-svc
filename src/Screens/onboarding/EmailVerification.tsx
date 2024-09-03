@@ -5,7 +5,10 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 
+import { ArrowLeft } from 'lucide-react';
+
 import { useState } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -99,6 +102,17 @@ function EmailComp() {
               Click to resend
             </Link>
           </div>
+
+          <div className="flex items-center justify-center space-x-2">
+      <ArrowLeft className="w-5 h-5 text-secondary font-semibold" />
+      {/* <span className="font-semibold text-secondary">Back to login</span> */}
+      <Link
+              href="/login"
+              className="font-semibold text-secondary"
+            >
+              Back to login
+            </Link>
+    </div>
     
     </div>
     
@@ -125,7 +139,8 @@ function OTPinput() {
           fontSize: "48px",
           color: "#15A588",
           fontWeight: "400",
-          caretColor: "blue"
+          caretColor: "blue",
+          outline: "none"
         }}
     />
   );
