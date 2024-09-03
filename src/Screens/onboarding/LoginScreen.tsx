@@ -1,4 +1,5 @@
 "use client";
+import { ConnectBtn } from "@/config/CustomBtn";
 import OnboardingLayout from "@/src/layout/OnboardingLayout";
 import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
@@ -25,6 +26,7 @@ import { Lock, Sms } from "iconsax-react";
 import Link from "next/link";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import StepsContainer from "@/src/components/reuseables/stepSlider";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function LoginScreen() {
   return (
@@ -117,7 +119,7 @@ function SignUp(props: any) {
         <p>OR</p>
         <div className="w-[40%] h-px  bg-gray-300"></div>
       </div>
-      <Button
+      {/* <Button
         type="button"
         variant={"outline"}
         className="w-full h-12 z-[9999] hover:bg-primary30 rounded-lg text-primary mt-6"
@@ -125,7 +127,12 @@ function SignUp(props: any) {
         //   disabled={isPending}
       >
         Connect wallet
-      </Button>
+      </Button> */}
+      <div className="flex justify-center items-center mt-5">
+      <ConnectButton />
+      </div>
+      
+      
 
       <div className="flex space-x-2 my-4 justify-center">
         <div className="flex items-center gap-3">
@@ -241,15 +248,8 @@ function Login() {
         <p>OR</p>
         <div className="w-[40%] h-px  bg-gray-300"></div>
       </div>
-      <Button
-        type="button"
-        variant={"outline"}
-        className="w-full h-12 z-[9999] hover:bg-primary30 rounded-lg text-primary mt-6"
-        //   onClick={form.handleSubmit(onSubmit)}
-        //   disabled={isPending}
-      >
-        Connect wallet
-      </Button>
+        
+        {/* <ConnectButton /> */}
 
       <div className="flex space-x-2 my-4 justify-center  ">
         <div className="flex items-center gap-3">

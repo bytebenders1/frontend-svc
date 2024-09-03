@@ -7,7 +7,14 @@ function Nav() {
       <div className="relative h-12 w-[150px] md:w-[197px]">
         <Image src={"/images/logo.svg"} fill alt="logo" />
       </div>
-      <div />
+      <div>
+        {/* <h1>Home</h1>
+        <h1>Dashboard</h1>
+        <h1>Home</h1>
+        <h1>Home</h1> */}
+
+        
+      </div>
     </nav>
   );
 }
