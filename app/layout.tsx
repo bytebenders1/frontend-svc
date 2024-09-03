@@ -1,6 +1,17 @@
+// 'use client'
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Nav from "@/src/components/reuseables/Nav";
+import { WagmiProvider } from "wagmi";
+
+import { config } from "./Providers";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense } from "react";
+import Provider from "@/config/provider";
+// import Providers from './Providers'
+const client = new QueryClient();
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +27,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Provider>
+          <Suspense>
+
+           {children}
+          </Suspense>
+        </Provider>
+        
+        </body>
     </html>
   );
 }
