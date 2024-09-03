@@ -3,7 +3,7 @@ import React from "react";
 
 function Nav() {
   return (
-    <nav className=" px-8 lg:px-28 h-[80px] flex items-center justify-between">
+    <nav className="px-8 lg:px-28 h-[80px] flex items-center justify-between">
       <div className="relative h-12 w-[150px] md:w-[197px]">
         <Image src={"/images/logo.svg"} fill alt="logo" />
       </div>
@@ -12,8 +12,6 @@ function Nav() {
         <h1>Dashboard</h1>
         <h1>Home</h1>
         <h1>Home</h1> */}
-
-        
       </div>
     </nav>
   );
