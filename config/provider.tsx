@@ -23,7 +23,13 @@ export const usePRouter = () => {
 };
 
 export default function Provider({ children }: { children: React.ReactNode }) {
-  const client = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        gcTime: 1_000 * 60 * 60 * 24, // 24 hours
+      },
+    },
+  });
   return (
     <WagmiProvider config={config}>
       <NextTopLoader

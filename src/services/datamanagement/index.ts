@@ -6,7 +6,9 @@ import DataManagement from "@/app/dashboard/data-management/page";
 class DataManagementService {
   async storeData(data: any) {
     try {
-      const response = await CLIENT.post("/store-data", data);
+      const response = await CLIENT.post("/store-data", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       return response.data;
     } catch (error) {
       handleRequestError(error);
@@ -15,7 +17,9 @@ class DataManagementService {
 
   async updateData(data: any) {
     try {
-      const response = await CLIENT.post("/update-data", data);
+      const response = await CLIENT.post("/update-data", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       return response.data;
     } catch (error) {
       handleRequestError(error);

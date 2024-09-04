@@ -4,7 +4,7 @@ import { handleRequestError } from "../helper";
 import DataManagement from "@/app/dashboard/data-management/page";
 
 class KeyManagementService {
-  async grantAccess(data: any) {
+  async grantAccess() {
     try {
       const response = await CLIENT.get("/generate-key");
       return response.data;
