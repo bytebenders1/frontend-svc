@@ -156,40 +156,6 @@ function SignUp(props: any) {
       >
         {isPending ? "Submitting" : "Get Started"}
       </Button>
-      {/* <div className="w-full flex items-center justify-between mt-4">
-        <div className="w-[40%] h-px bg-gray-300"></div>
-        <p>OR</p>
-        <div className="w-[40%] h-px  bg-gray-300"></div>
-      </div> */}
-      {/* <Button
-        type="button"
-        variant={"outline"}
-        className="w-full h-12 z-[9999] hover:bg-primary30 rounded-lg text-primary mt-6"
-        //   onClick={form.handleSubmit(onSubmit)}
-        //   disabled={isPending}
-      >
-        Connect wallet
-      </Button> */}
-      {/* <div className="flex justify-center items-center mt-5">
-        <ConnectButton />
-      </div> */}
-
-      {/* <div className="flex space-x-2 my-4 justify-center">
-        <div className="flex items-center gap-3">
-          <label
-            htmlFor="checkbox"
-            className="text-secondary text-sm font-semibold"
-          >
-            Already have an account?
-          </label>
-        </div>
-        <Link
-          href="/login"
-          className="text-primary text-sm font-semibold hover:underline"
-        >
-          Log in
-        </Link>
-      </div> */}
     </div>
   );
 }
