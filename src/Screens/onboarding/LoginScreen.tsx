@@ -1,10 +1,9 @@
 "use client";
-import { ConnectBtn } from "@/config/CustomBtn";
+
 import OnboardingLayout from "@/src/layout/OnboardingLayout";
-import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+
 import {
   Tabs,
   TabsContent,
@@ -22,7 +21,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/src/components/ui/form";
-import { Lock, Sms } from "iconsax-react";
 import Link from "next/link";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import StepsContainer from "@/src/components/reuseables/stepSlider";
@@ -129,10 +127,8 @@ function SignUp(props: any) {
         Connect wallet
       </Button> */}
       <div className="flex justify-center items-center mt-5">
-      <ConnectButton />
+        <ConnectButton />
       </div>
-      
-      
 
       <div className="flex space-x-2 my-4 justify-center">
         <div className="flex items-center gap-3">
@@ -248,8 +244,8 @@ function Login() {
         <p>OR</p>
         <div className="w-[40%] h-px  bg-gray-300"></div>
       </div>
-        
-        {/* <ConnectButton /> */}
+
+      {/* <ConnectButton /> */}
 
       <div className="flex space-x-2 my-4 justify-center  ">
         <div className="flex items-center gap-3">
