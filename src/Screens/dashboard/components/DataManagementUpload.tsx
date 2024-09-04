@@ -52,7 +52,10 @@ function DataManagementUpload() {
         <>
           <div className="mt-4 space-y-4 w-full md:w-8/12 md:mx-auto">
             {uploadedFiles.map((_file, _index) => (
-              <div className="border flex gap-x-4 rounded-lg px-6 py-4 border-neutral-300">
+              <div
+                key={_index + _file.name}
+                className="border flex gap-x-4 rounded-lg px-6 py-4 border-neutral-300"
+              >
                 <Image
                   //   @ts-ignore
                   src={uploadedFileObj[_file.type] || file}
