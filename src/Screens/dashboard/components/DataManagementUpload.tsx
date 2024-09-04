@@ -53,7 +53,7 @@ function DataManagementUpload() {
           <div className="mt-4 space-y-4 w-full md:w-8/12 md:mx-auto">
             {uploadedFiles.map((_file, _index) => (
               <div
-                key={_index + _file.name}
+                key={_index}
                 className="border flex gap-x-4 rounded-lg px-6 py-4 border-neutral-300"
               >
                 <Image
