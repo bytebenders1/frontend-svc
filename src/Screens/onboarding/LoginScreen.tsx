@@ -25,7 +25,10 @@ import Link from "next/link";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import StepsContainer from "@/src/components/reuseables/stepSlider";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useSignUpMutation } from "@/src/hooks/authentication/auth";
+import {
+  useSignInMutation,
+  useSignUpMutation,
+} from "@/src/hooks/authentication/auth";
 import CustomError from "@/src/components/reuseables/CustomError";
 
 function LoginScreen() {
@@ -84,7 +87,13 @@ function SignUp(props: any) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutateAsync(values);
+    mutateAsync(values).then((res) => {
+      if (res?.data) {
+        form.reset();
+        form.resetField("password");
+        form.resetField("username");
+      }
+    });
   }
 
   return (
@@ -187,6 +196,7 @@ function SignUp(props: any) {
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const { mutateAsync, isPending, isError, error } = useSignInMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -194,6 +204,16 @@ function Login() {
       password: "",
     },
   });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    mutateAsync(values).then((res) => {
+      if (res?.data) {
+        form.reset();
+        form.resetField("password");
+        form.resetField("username");
+      }
+    });
+  }
 
   return (
     <div className="mt-8">
@@ -247,13 +267,13 @@ function Login() {
 
           <div className="flex justify-between -mt-2">
             <div className="flex items-center gap-3">
-              <Checkbox id="checkbox" name="checkbox" />
+              {/* <Checkbox id="checkbox" name="checkbox" />
               <label
                 htmlFor="checkbox"
                 className="text-secondary text-sm font-semibold"
               >
                 Remember for 30 days
-              </label>
+              </label> */}
             </div>
             <Link
               href="/forgot-password"
@@ -269,10 +289,10 @@ function Login() {
       <Button
         type="button"
         className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-10"
-        // onClick={form.handleSubmit(onSubmit)}
-        //   disabled={isPending}
+        onClick={form.handleSubmit(onSubmit)}
+        disabled={isPending}
       >
-        Log In
+        {isPending ? "Logging in" : " Log In"}
       </Button>
       {/* <div className="w-full flex items-center justify-between mt-4">
         <div className="w-[40%] h-px bg-gray-300"></div>
