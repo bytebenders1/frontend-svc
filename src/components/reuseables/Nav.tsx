@@ -1,9 +1,13 @@
+"use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 function Nav() {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
-    <nav className="px-8 lg:px-28 h-[80px] flex items-center justify-between">
+    <nav className="px-8 lg:px-10 xl:px-28 h-[80px] flex items-center justify-between">
       <div className="relative h-12 w-[150px] md:w-[197px]">
         <Image src={"/images/logo.svg"} fill alt="logo" />
       </div>

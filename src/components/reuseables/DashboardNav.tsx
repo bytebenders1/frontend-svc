@@ -29,7 +29,7 @@ function DashboardNav() {
     },
   ];
   return (
-    <div className="px-8 lg:px-28 h-[80px] flex items-center justify-between border-y">
+    <div className="hidden px-8 lg:px-10 xl:px-28 h-[80px] lg:flex items-center justify-between border-y">
       <div className="flex items-center gap-x-4">
         {links.map((_link, _index) => (
           <Link

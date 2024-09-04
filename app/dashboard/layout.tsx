@@ -11,7 +11,8 @@ function Layout({
     <>
       <Nav />
       <DashboardNav />
-      <div className="px-8 lg:px-28 ">{children}</div>
+      <div className="border-b h-px w-full border-neutral-300 lg:hidden" />
+      <div className="px-4 md:px-8 lg:px-10 xl:px-28 ">{children}</div>
     </>
   );
 }
