@@ -22,3 +22,5 @@ export function getKB(file: { size: number }) {
 export function getMB(file: { size: number }) {
   return Number(file.size / 1048576).toFixed(2);
 }
+
+export const STORAGE_KEY = "SECURE_DATA";
