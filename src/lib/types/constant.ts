@@ -3,6 +3,7 @@ export const fileCsv = "/images/docs/fileCvs.svg";
 export const fileDocs = "/images/docs/fileDocs.svg";
 export const filePdf = "/images/docs/fileSvg.svg";
 export const fileXlsx = "/images/docs/fileXlsx.svg";
+export const logo2 = "/images/logo2.png";
 
 export const uploadedFileObj = {
   "image/jpeg": file,

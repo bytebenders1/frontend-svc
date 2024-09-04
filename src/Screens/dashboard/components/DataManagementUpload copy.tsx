@@ -6,7 +6,7 @@ import { uploadedFile } from "@/src/lib/types/dashboard.types";
 import { Trash } from "iconsax-react";
 import { UploadCloud } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { DataTableDemo } from "./dataManagementTable";
 import { useGetSecret } from "@/src/hooks/generateSecret/generateSecret";
@@ -16,6 +16,7 @@ import Spinner from "@/src/components/reuseables/Spinner";
 import Web3 from "web3";
 import DataStorage from "./DataStorage.json";
 
+// Declare ethereum interface
 declare global {
   interface Window {
     ethereum?: any;
@@ -25,86 +26,25 @@ declare global {
 function DataManagementUpload() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [web3, setWeb3] = useState<Web3 | null>(null);
-  const [account, setAccount] = useState<string | null>(null);
-  const {
-    mutateAsync: storeOnBlockAsync,
-    isPending: blocking,
-    isError: isBlockError,
-    error: blockError,
-  } = useStoreOnBlockchainMutation();
 
   // Initialize Web3 in useEffect to ensure it only runs on the client side
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     const web3Instance = new Web3(window.ethereum);
-  //     setWeb3(web3Instance);
-  //   } else {
-  //     console.error("MetaMask is not installed.");
-  //   }
-  // }, []);
-
   useEffect(() => {
-    const initializeWeb3 = async () => {
-      if (typeof window.ethereum !== "undefined") {
-        try {
-          // Request account access
-          await window.ethereum.request({ method: "eth_requestAccounts" });
-          const web3Instance = new Web3(window.ethereum);
-          setWeb3(web3Instance);
-
-          // Get the current account
-          const accounts = await web3Instance.eth.getAccounts();
-          setAccount(accounts[0]);
-
-          // Listen for account changes
-          window.ethereum.on("accountsChanged", (accounts: string[]) => {
-            setAccount(accounts[0]);
-          });
-        } catch (error) {
-          console.error("Failed to initialize Web3", error);
-        }
-      } else {
-        console.error("MetaMask is not installed.");
-      }
-    };
-
-    initializeWeb3();
-
-    // Cleanup listener on component unmount
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener("accountsChanged", setAccount);
-      }
-    };
+    if (window.ethereum) {
+      const web3Instance = new Web3(window.ethereum);
+      setWeb3(web3Instance);
+    } else {
+      console.error("MetaMask is not installed.");
+    }
   }, []);
 
-  async function connectWallet() {
-    try {
-      if (typeof window.ethereum !== "undefined") {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        return accounts[0];
-      }
-    } catch (error) {
-      console.error("User denied account access", error);
-      throw error;
-    }
-  }
-
-  const connectWallet2 = async () => {
-    if (!web3) {
-      console.error("Web3 is not initialized");
-      return;
-    }
+  const connectWallet = async (): Promise<string> => {
+    if (!web3) throw new Error("Web3 is not initialized");
 
     try {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      setAccount(accounts[0]);
+      const accounts = await web3.eth.requestAccounts();
+      return accounts[0];
     } catch (error) {
-      console.error("Failed to connect wallet", error);
+      throw new Error("Failed to connect wallet: " + error);
     }
   };
 
@@ -115,36 +55,47 @@ function DataManagementUpload() {
     args: any[]
   ): Promise<any> => {
     if (!web3) throw new Error("Web3 is not initialized");
-    if (!account) throw new Error("No account connected");
 
     try {
-      const contract = new web3.eth.Contract(contractAbi, contractAddress);
-      const data = contract.methods[methodName](...args).encodeABI();
+      const userAddress = await connectWallet();
 
-      const gasLimit = await web3.eth.estimateGas({
-        from: account,
-        to: contractAddress,
-        data: data,
+      const contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+      const txData = contract.methods[methodName](...args).encodeABI();
+
+      const gasLimit = await contract.methods[methodName](...args).estimateGas({
+        from: userAddress,
       });
 
       const tx = {
-        from: account,
+        from: userAddress,
         to: contractAddress,
-        data,
+        data: txData,
         gas: gasLimit,
       };
 
-      const req = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      await storeOnBlockAsync({ signedTx: req[0] });
+      const signedTx = await web3.eth.personal.signTransaction(tx, userAddress);
 
-      return req[0];
+      const response = await fetch("/api/submit-transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ signedTx }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Transaction submission failed");
+      }
+
+      const result = await response.json();
+      return result;
     } catch (error) {
       console.error("Error signing or submitting transaction:", error);
       throw error;
     }
   };
+
   const { refetch, data, isFetching, isError, error, isLoading } =
     useGetSecret(isEnabled);
   const {
@@ -153,40 +104,51 @@ function DataManagementUpload() {
     isError: isStoreError,
     error: storeError,
   } = useStoreDataMutation();
+  const {
+    mutateAsync: storeOnBlockAsync,
+    isPending: blocking,
+    isError: isBlockError,
+    error: blockError,
+  } = useStoreOnBlockchainMutation();
 
   const [uploadedFiles, setUploadedFiles] = useState<uploadedFile[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles: any) => {
+    onDrop: async (acceptedFiles: any) => {
       setIsEnabled(true);
-      refetch().then((res) => {
-        const file = acceptedFiles[0];
-
-        if (res?.data) {
-          const formData = new FormData();
-          formData.append("file", acceptedFiles[0]);
-          formData.append("secretKey", res.data.secretKey);
-          // @ts-ignore
-          mutateAsync(formData).then((res) => {
-            if (res?.txHash && web3) {
-              const contractAddress =
-                "0xbE1bC8C4e157EEAA5f41A6891E05A83a023c9Db1";
-              const contractAbi = DataStorage.abi; // Your contract ABI
-              const methodName = "storeData"; // Replace with the actual method name
-              const args = [res.txHash]; // Arguments for contract method
-
-              // User signs and submits the transaction
-              signAndSubmitTransaction(
-                contractAddress,
-                contractAbi,
-                methodName,
-                args
-              );
-            }
+      try {
+        refetch().then((res) => {
+          console.log(res);
+        });
+        const secretRes = await refetch();
+        setUploadedFiles([...uploadedFiles, ...acceptedFiles]);
+        console.log(acceptedFiles[0]);
+        console.log(secretRes);
+        if (secretRes?.data) {
+          setIsEnabled(false);
+          const fileData = await mutateAsync({
+            file: acceptedFiles[0],
+            secret: secretRes.data.secretKey,
           });
+
+          if (fileData?.data && web3) {
+            const contractAddress =
+              "0xbE1bC8C4e157EEAA5f41A6891E05A83a023c9Db1";
+            const contractAbi = DataStorage.abi; // Your contract ABI
+            const methodName = "storeData"; // Replace with the actual method name
+            const args = [fileData.data.txHash]; // Arguments for contract method
+
+            // User signs and submits the transaction
+            await signAndSubmitTransaction(
+              contractAddress,
+              contractAbi,
+              methodName,
+              args
+            );
+          }
         }
-      });
-      // @ts-ignore
-      setUploadedFiles([...uploadedFiles, ...acceptedFiles]);
+      } catch (error) {
+        console.error("Error uploading file or signing transaction:", error);
+      }
     },
   });
 
@@ -240,7 +202,6 @@ function DataManagementUpload() {
                       ? `${getMB(_file)} MB`
                       : `${getKB(_file)} KB`}
                   </p>
-                  {/* <Progress value={33} className="h-2 mt-1.5" /> */}
                 </div>
                 {isFetching || isLoading || isPending || blocking ? (
                   <Spinner className="w-4 h-4" />
