@@ -1,7 +1,9 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import { usePathname } from "next/navigation";
 
 function DashboardNav() {
+  const pathname = usePathname();
   const links = [
     {
       name: "Data Management",
@@ -16,8 +18,8 @@ function DashboardNav() {
       link: "/dashboard/access-control",
     },
     {
-      name: "Saved Reports",
-      link: "/dashboard/saved-reports",
+      name: "Data Verification Using(ZKP)",
+      link: "/dashboard/data-verification",
     },
     {
       name: "Schedule Reports",
@@ -29,17 +31,21 @@ function DashboardNav() {
     },
   ];
   return (
-    <div className="hidden px-8 lg:px-10 xl:px-28 h-[80px] lg:flex items-center justify-between border-y">
+    <div className="hidden px-2 md:px-4 lg:px-10 xl:px-28 h-[80px] lg:flex items-center justify-between border-y">
       <div className="flex items-center gap-x-4">
-        {links.map((_link, _index) => (
-          <Link
-            href={_link.link}
-            key={_index}
-            className="text-base text-secondary hover:text-primary font-semibold"
-          >
-            {_link.name}
-          </Link>
-        ))}
+        {links.map((_link, _index) => {
+          return (
+            <Link
+              href={_link.link}
+              key={_index}
+              className={`text-base text-secondary hover:text-primary font-semibold ${
+                pathname === _link.link ? "!text-primary" : ""
+              } `}
+            >
+              {_link.name}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
