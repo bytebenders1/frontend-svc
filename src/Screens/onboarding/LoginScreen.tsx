@@ -25,6 +25,8 @@ import Link from "next/link";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import StepsContainer from "@/src/components/reuseables/stepSlider";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useSignUpMutation } from "@/src/hooks/authentication/auth";
+import CustomError from "@/src/components/reuseables/CustomError";
 
 function LoginScreen() {
   return (
@@ -63,35 +65,69 @@ function TabComp() {
 }
 
 const formSchema = z.object({
-  email: z.string().email("Enter a valid email address."),
+  username: z.string().min(1, {
+    message: "Username is required",
+  }),
   password: z.string().min(1, {
     message: "Password is required",
   }),
 });
 function SignUp(props: any) {
   const [showPassword, setShowPassword] = useState(false);
+  const { mutateAsync, isPending, isError, error } = useSignUpMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    mutateAsync(values);
+  }
+
   return (
     <div className="mt-8">
+      <CustomError isError={isError} error={error} />
       <Form {...form}>
         <form className="space-y-6">
           <FormField
             control={form.control}
-            name="email"
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Input
                     placeholder="Enter your email"
                     {...field}
+                    type="text"
                     // leftIcon={<Sms size="20" variant="Bold" color="gray" />}
+                    className="!rounded-lg"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your password"
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    rightIcon={
+                      <div
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="cursor-pointer hover:scale-105"
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </div>
+                    }
                     className="!rounded-lg"
                   />
                 </FormControl>
@@ -106,17 +142,16 @@ function SignUp(props: any) {
       <Button
         type="button"
         className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-4"
-        //   onClick={form.handleSubmit(onSubmit)}
-        //   disabled={isPending}
-        onClick={() => props.next()}
+        onClick={form.handleSubmit(onSubmit)}
+        disabled={isPending}
       >
-        Get Started
+        {isPending ? "Submitting" : "Get Started"}
       </Button>
-      <div className="w-full flex items-center justify-between mt-4">
+      {/* <div className="w-full flex items-center justify-between mt-4">
         <div className="w-[40%] h-px bg-gray-300"></div>
         <p>OR</p>
         <div className="w-[40%] h-px  bg-gray-300"></div>
-      </div>
+      </div> */}
       {/* <Button
         type="button"
         variant={"outline"}
@@ -126,11 +161,11 @@ function SignUp(props: any) {
       >
         Connect wallet
       </Button> */}
-      <div className="flex justify-center items-center mt-5">
+      {/* <div className="flex justify-center items-center mt-5">
         <ConnectButton />
-      </div>
+      </div> */}
 
-      <div className="flex space-x-2 my-4 justify-center">
+      {/* <div className="flex space-x-2 my-4 justify-center">
         <div className="flex items-center gap-3">
           <label
             htmlFor="checkbox"
@@ -145,7 +180,7 @@ function SignUp(props: any) {
         >
           Log in
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -155,7 +190,7 @@ function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
@@ -166,7 +201,7 @@ function Login() {
         <form className="space-y-6">
           <FormField
             control={form.control}
-            name="email"
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -234,20 +269,20 @@ function Login() {
       <Button
         type="button"
         className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-10"
-        //   onClick={form.handleSubmit(onSubmit)}
+        // onClick={form.handleSubmit(onSubmit)}
         //   disabled={isPending}
       >
         Log In
       </Button>
-      <div className="w-full flex items-center justify-between mt-4">
+      {/* <div className="w-full flex items-center justify-between mt-4">
         <div className="w-[40%] h-px bg-gray-300"></div>
         <p>OR</p>
         <div className="w-[40%] h-px  bg-gray-300"></div>
-      </div>
+      </div> */}
 
       {/* <ConnectButton /> */}
 
-      <div className="flex space-x-2 my-4 justify-center  ">
+      {/* <div className="flex space-x-2 my-4 justify-center  ">
         <div className="flex items-center gap-3">
           <label
             htmlFor="checkbox"
@@ -262,7 +297,7 @@ function Login() {
         >
           Sign Up
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
