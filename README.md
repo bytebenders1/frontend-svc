@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SecureData DApp - E-Identity and Data Verification
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+SecureData DApp is a decentralized application (DApp) built using Next.js and Shadcn, designed for secure e-identity management and data verification. This DApp empowers users to securely store, verify, and manage their identity documents and sensitive data in a decentralized, user-controlled environment. Utilizing blockchain technology, Zero-Knowledge (zk) proofs, and Lisk Layer 2 (L2) networks, SecureData ensures enhanced privacy, security, and autonomy over users' data.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### E-Identity 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Identity Storage:**  
+  Secure storage of identity documents like passports, driver’s licenses, and other identification on the Lisk network to ensure a tamper-proof environment.
+  
+- **Identity Verification:**  
+  A Data Verification Contract is implemented to validate the authenticity of identity documents, employing Zero-Knowledge (zk) proofs to securely verify documents without revealing sensitive data.
+  
+- **Access Control:**  
+  Access to identity documents is restricted to authorized users, safeguarding sensitive information and ensuring privacy.
+  
+- **Identity Management:**  
+  Users can manage, update, and revoke their identity documents, maintaining full control over their personal information.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Data Verification
 
-## Learn More
+- **Data Hashing:**  
+  Hashes of sensitive data (e.g., personal and financial records) are stored on the L2 network to create a secure and immutable record.
+  
+- **Data Verification:**  
+  The Data Verification Contract ensures that the stored data has not been altered, maintaining data integrity. Zero-Knowledge (zk) proofs allow third parties to verify the authenticity of documents without having direct access to the data itself.
+  
+- **Access Control:**  
+  Access controls are implemented to guarantee that only authorized users can verify and access sensitive data.
+  
+- **Data Sharing:**  
+  Users can securely share their verified data with customizable access controls, providing flexibility without compromising security.
 
-To learn more about Next.js, take a look at the following resources:
+## Benefits
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Security:**  
+  The DApp employs robust security mechanisms to protect sensitive data and identity documents.
+  
+- **Immutable Records:**  
+  Blockchain technology ensures that all data is immutable, preserving data integrity.
+  
+- **Decentralized:**  
+  Data storage is decentralized, reducing dependency on central authorities and improving security.
+  
+- **User-Controlled:**  
+  Users maintain complete control over their identity documents and sensitive data.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Zero-Knowledge Verification:**  
+  zk technology ensures that organizations can verify user data without exposing sensitive information, enhancing privacy.
 
-## Deploy on Vercel
+## Design Focus
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### UI Design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Simplicity and Clarity:**  
+  The interface is clean, intuitive, and easy to navigate.
+  
+- **Secure Access:**  
+  Login options are clearly marked, with 2FA (Two-Factor Authentication) for additional security.
+  
+- **Document Upload & Management:**  
+  A straightforward process for uploading and managing documents, with progress indicators.
+  
+- **Data Verification Status:**  
+  A clear presentation of the verification status with visual cues such as badges or checkmarks.
+  
+- **Access Controls:**  
+  Intuitive drag-and-drop functionality for setting and managing access permissions.
+
+### UX Design
+
+- **User-Centric Flow:**  
+  A seamless user journey that guides users through storing, verifying, and sharing data.
+  
+- **Immediate Feedback:**  
+  Clear feedback on actions taken (e.g., document uploads, data verification).
+  
+- **Accessibility:**  
+  Full support for screen readers, keyboard navigation, and mobile optimization.
+  
+- **Security Prompts:**  
+  Integrated security prompts to educate users on best practices.
+
+## Technologies Used
+
+- **Next.js:** React-based framework for building fast, scalable applications.
+- **Shadcn:** Modular and reusable components for building sleek UIs.
+- **Lisk Layer 2 (L2) Blockchain:** Ensures decentralized, scalable, and tamper-proof storage for data.
+- **Zero-Knowledge Proofs (zk):** Provides privacy-preserving verification for identity documents and data without revealing the data itself.
+- **Data Verification Contracts:** Smart contracts for verifying identity and sensitive data.
+
+## Potential Integrations
+
+- **Government Services:** Integration with platforms for secure identity verification.
+- **Financial Institutions:** Partnerships for secure verification of personal and financial data.
+- **Healthcare Services:** Collaboration with healthcare providers for secure storage and verification of medical records.
+
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
