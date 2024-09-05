@@ -241,12 +241,12 @@ function Login() {
                 Remember for 30 days
               </label> */}
             </div>
-            <Link
+            {/* <Link
               href="/forgot-password"
               className="text-primary text-sm font-semibold hover:underline"
             >
               Forgot Password?
-            </Link>
+            </Link> */}
           </div>
         </form>
       </Form>
