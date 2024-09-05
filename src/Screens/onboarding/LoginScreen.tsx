@@ -128,9 +128,10 @@ function SignUp(props: any) {
       >
         Connect wallet
       </Button> */}
-      <div className="flex justify-center items-center mt-5">
+      <ConnectBtn />
+      {/* <div className="flex justify-center items-center mt-5">
       <ConnectButton />
-      </div>
+      </div> */}
       
       
 

@@ -35,7 +35,7 @@ export const ConnectBtn = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button onClick={openConnectModal} type="button">
+                  <button onClick={openConnectModal} type="button" className='w-full bg-blue-300 mt-5'>
                     Connect Wallet
                   </button>
                 );
