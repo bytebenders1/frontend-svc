@@ -58,7 +58,7 @@ function LandingPage() {
           <Nav />
           <div className=" bg-[#065646] my-10 flex justify-between lg:w-11/12 !mx-auto py-12 ml-5 rounded-lg sm:flex-col-1 ">
             <div className="flex justify-center px-12">
-              <div className="">
+              <div className="flex flex-col justify-center">
                 <h1 className="text-white  justify-center text-xl md:text-3xl lg:text-6xl mt-5 font-bold lg:w-[600px] ">
                   <span className="text-[#26FCD1]">Secure</span> Your Data,{" "}
                   Protect Your Privacy.
@@ -67,10 +67,10 @@ function LandingPage() {
                   Experience the Future of Data Management with <br />{" "}
                   Zero-Knowledge Proofs
                 </p>
-                <div className="flex gap-3 mt-5 mr-5 justify-end">
+                {/* <div className="flex gap-3 mt-5 mr-5 justify-end">
                   <Input placeholder="Enter your email" />
                   <Button className="h-11">Get Started</Button>
-                </div>
+                </div> */}
                 <p className="text-white text-sm mt-3">
                   We care about your data in our{" "}
                   <a href="" className="underline-offset-1">
@@ -116,8 +116,8 @@ function LandingPage() {
             ))}
           </div>
         </div>
-        <section className="bg-[#04483A] lg:px-20 mx-auto lg:flex items-center justify-center gap-10 lg:gap-20 p-10">
-          <div className="flex justify-center">
+        <section className="bg-[#04483A] lg:px-20 mx-auto lg:flex !items-center !justify-center gap-10 lg:gap-20 p-10">
+          <div className="flex justify-center ">
             <Image
               src="/ma.svg"
               height={350}
@@ -126,8 +126,8 @@ function LandingPage() {
               className="shrink-0"
             />
           </div>
-          <div className="">
-            <div className=" w-7/12">
+          <div className="w-7/12">
+            <div className=" ">
               <h1 className="lg:text-3xl text-bold text-white font-Inter">
                 “The integration with government services has made my work so
                 much easier. I can securely share verified documents with just a
