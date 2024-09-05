@@ -107,4 +107,4 @@ Visit the live platform to explore the e-identity management and data verificati
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License

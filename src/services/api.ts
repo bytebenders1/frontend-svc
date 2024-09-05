@@ -8,23 +8,24 @@ import { STORAGE_KEY } from "../lib/types/constant";
 
 export const CLIENT = axios.create({
   baseURL: CONFIG.API_BASE_URL,
+  headers: {
+    "content-type": "application/json",
+  },
 });
 // @ts-ignore
 CLIENT.interceptors.request.use(async (config: AxiosRequestConfig) => {
   if (typeof window === "undefined") return;
-  const localStoreString = localStorage.getItem(STORAGE_KEY + "_userStore");
+  const localStoreString = localStorage.getItem(STORAGE_KEY + "_details");
   if (!localStoreString) return config;
-
   const localStore = JSON.parse(localStoreString);
 
-  const accessToken = localStore?.state.accessToken;
+  const accessToken = localStore;
 
   const newConfig: AxiosRequestConfig = {
     ...config,
     headers: {
       ...config.headers,
       Authorization: `Bearer ${accessToken}`,
-      "content-type": "application/json",
     },
   };
 

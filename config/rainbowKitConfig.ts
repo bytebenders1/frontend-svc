@@ -2,7 +2,14 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 
-import { base, sepolia, polygon, lisk, mainnet } from "viem/chains";
+import {
+  base,
+  sepolia,
+  polygon,
+  lisk,
+  mainnet,
+  zksyncSepoliaTestnet,
+} from "viem/chains";
 //import { defaultConfig } from 'next/dist/server/config-shared';
 
 export const config = getDefaultConfig({
@@ -13,6 +20,7 @@ export const config = getDefaultConfig({
     polygon,
     base,
     lisk,
+    zksyncSepoliaTestnet,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS == "true" ? [sepolia] : []),
   ],
   ssr: true, // If your dApp uses server side rendering (SSR)

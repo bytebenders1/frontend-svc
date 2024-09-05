@@ -9,6 +9,7 @@ import {
 import { Login } from "iconsax-react";
 import DataVerification from "./components/DataVerificationRequest";
 import VerificationRequest from "./VerificationRequest";
+import DataSharing from "./DataSharing";
 
 function DataVerificationScreen() {
   return (
@@ -42,7 +43,7 @@ function TabComp() {
         <VerificationRequest />
       </TabsContent>
       <TabsContent value="dataSharing">
-        <Login />
+        <DataSharing />
       </TabsContent>
     </Tabs>
   );
