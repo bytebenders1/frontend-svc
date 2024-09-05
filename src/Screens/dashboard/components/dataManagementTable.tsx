@@ -32,44 +32,12 @@ import {
   TableRow,
 } from "@/src/components/ui/table";
 import Image from "next/image";
-import { filePdf, getMB } from "@/src/lib/types/constant";
+import { file, filePdf, getMB } from "@/src/lib/types/constant";
 import { Edit2, Eye, Trash } from "iconsax-react";
-
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    name: "Tech requirements.pdf",
-    size: 1024,
-    uploaded: new Date(),
-    updatedAt: new Date(),
-    uploadedBy: "Eleanor Pena",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    name: "Dashboard screenshot.jpg",
-    size: 20001024,
-    uploaded: new Date(),
-    updatedAt: new Date(),
-    uploadedBy: "Carmella Music",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    name: "Tech requirements.pdf",
-    size: 10000024,
-    uploaded: new Date(),
-    updatedAt: new Date(),
-    uploadedBy: "Monserrat Pena",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-];
+import {
+  useGetUserDataHashes,
+  useGetUserDetails,
+} from "@/src/hooks/userHook/useUser";
 
 export type Payment = {
   id: string;
@@ -83,7 +51,14 @@ export type Payment = {
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export interface DataRecord {
+  dataHash: string;
+  filename: string;
+  encryptedSecret: string;
+  createdAt: string;
+}
+
+export const columns: ColumnDef<DataRecord>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -107,21 +82,26 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "filename",
     header: "File Name",
     cell: ({ row }) => (
       <div className="capitalize flex items-center gap-3">
-        <Image src={filePdf} alt="file" width={30} height={30} />
-        <div className="">
-          <p className="text-sm text-secondary">{row.getValue("name")}</p>
+        <Image src={file} alt="file" width={30} height={30} />
+        <div
+          className="w-[150px] overflow-hidden cursor-pointer"
+          onClick={() =>
+            navigator.clipboard.writeText(row.getValue("filename"))
+          }
+        >
+          <p className="text-sm text-secondary">{row.getValue("filename")}</p>
           {/* @ts-ignore */}
-          <p className="text-xs text-secondary/90">{getMB(row.original)} MB</p>
+          {/* <p className="text-xs text-secondary/90">{getMB(row.original)} MB</p> */}
         </div>
       </div>
     ),
   },
   {
-    accessorKey: "uploaded",
+    accessorKey: "dataHash",
     header: ({ column }) => {
       return (
         <Button
@@ -129,34 +109,46 @@ export const columns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="pl-0 font-normal text-sm"
         >
-          Date Uploaded
+          Data Hash
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="text-sm text-secondary">
-        {row.original.uploaded?.toDateString().slice(0, 15)}
+      <div
+        className="text-sm text-secondary w-[150px] overflow-hidden cursor-pointer"
+        onClick={() => navigator.clipboard.writeText(row.getValue("filename"))}
+      >
+        {row.original.dataHash}
       </div>
     ),
   },
   {
-    accessorKey: "updatedAt",
-    header: () => <div className="text-left">Last Updated</div>,
+    accessorKey: "encryptedSecret",
+    header: () => <div className="text-left">Encryption key</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-sm text-secondary">
-          {row.original.uploaded?.toDateString().slice(0, 15)}
+        <div
+          className="text-sm text-secondary w-[150px] shrink-0 overflow-hidden"
+          onClick={() =>
+            navigator.clipboard.writeText(row.original.encryptedSecret)
+          }
+        >
+          {row.original.encryptedSecret}
         </div>
       );
     },
   },
   {
-    accessorKey: "uploadedBy",
-    header: () => <div className="text-left">Uploaded By</div>,
+    accessorKey: "createdAt",
+    header: () => <div className="text-left">Date</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-sm text-secondary">{row.original.uploadedBy}</div>
+        <div className="text-sm text-secondary">
+          {row?.original?.createdAt
+            ? new Date(row.original.createdAt).toDateString().slice(0, 16)
+            : ""}
+        </div>
       );
     },
   },
@@ -193,6 +185,9 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function DataTableDemo() {
+  const { data: userHashes, isLoading, isFetching } = useGetUserDataHashes();
+
+  console.log({ userHashes });
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -202,7 +197,7 @@ export function DataTableDemo() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data,
+    data: userHashes ?? [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -298,4 +293,11 @@ export function DataTableDemo() {
       </div>
     </div>
   );
+}
+
+export interface DataRecord {
+  dataHash: string;
+  filename: string;
+  encryptedSecret: string;
+  createdAt: string;
 }
