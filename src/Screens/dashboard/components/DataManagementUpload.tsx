@@ -15,6 +15,7 @@ import { useStoreOnBlockchainMutation } from "@/src/hooks/blockchain/useBlockcha
 import Spinner from "@/src/components/reuseables/Spinner";
 import Web3 from "web3";
 import DataStorage from "./DataStorage.json";
+import { useGetUserDataHashes } from "@/src/hooks/userHook/useUser";
 
 declare global {
   interface Window {
@@ -23,6 +24,7 @@ declare global {
 }
 
 function DataManagementUpload() {
+  const { data: userHashes, refetch: getHash } = useGetUserDataHashes();
   const [isEnabled, setIsEnabled] = useState(false);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [account, setAccount] = useState<string | null>(null);
@@ -160,7 +162,7 @@ function DataManagementUpload() {
       setIsEnabled(true);
       refetch().then((res) => {
         const file = acceptedFiles[0];
-
+        setUploadedFiles([...uploadedFiles, ...acceptedFiles]);
         if (res?.data) {
           const formData = new FormData();
           formData.append("file", acceptedFiles[0]);
@@ -168,6 +170,9 @@ function DataManagementUpload() {
           // @ts-ignore
           mutateAsync(formData).then((res) => {
             if (res?.txHash && web3) {
+              getHash().then((res) => {
+                setUploadedFiles([]);
+              });
               // const contractAddress =
               //   "0xbE1bC8C4e157EEAA5f41A6891E05A83a023c9Db1";
               // const contractAbi = DataStorage.abi; // Your contract ABI
@@ -274,7 +279,7 @@ function DataManagementUpload() {
             <div className="px-6 py-5 border-b">
               <p>File Uploaded</p>
             </div>
-            <DataTableDemo />
+            <DataTableDemo userHashes={userHashes} />
           </div>
         </>
       )}
