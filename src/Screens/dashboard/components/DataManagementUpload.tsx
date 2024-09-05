@@ -168,19 +168,18 @@ function DataManagementUpload() {
           // @ts-ignore
           mutateAsync(formData).then((res) => {
             if (res?.txHash && web3) {
-              const contractAddress =
-                "0xbE1bC8C4e157EEAA5f41A6891E05A83a023c9Db1";
-              const contractAbi = DataStorage.abi; // Your contract ABI
-              const methodName = "storeData"; // Replace with the actual method name
-              const args = [res.txHash]; // Arguments for contract method
-
-              // User signs and submits the transaction
-              signAndSubmitTransaction(
-                contractAddress,
-                contractAbi,
-                methodName,
-                args
-              );
+              // const contractAddress =
+              //   "0xbE1bC8C4e157EEAA5f41A6891E05A83a023c9Db1";
+              // const contractAbi = DataStorage.abi; // Your contract ABI
+              // const methodName = "storeData"; // Replace with the actual method name
+              // const args = [res.txHash]; // Arguments for contract method
+              // // User signs and submits the transaction
+              // signAndSubmitTransaction(
+              //   contractAddress,
+              //   contractAbi,
+              //   methodName,
+              //   args
+              // );
             }
           });
         }

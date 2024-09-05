@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import MobileSideBar from "./mobileSideBar";
+import Link from "next/link";
 
 function Nav() {
   const pathname = usePathname();
@@ -30,6 +31,14 @@ function Nav() {
               </Button>
             )}
           </div>
+          {pathname === "/" && (
+            <Link
+              href="/login"
+              className="text-white hover:scale-105 transition-all duration-200 ease-in-out bg-primary px-6 rounded-lg py-3"
+            >
+              Get Started
+            </Link>
+          )}
         </div>
         <MobileSideBar onClose={() => setIsOpen(!isOpen)} isOpen={isOpen} />
       </nav>
