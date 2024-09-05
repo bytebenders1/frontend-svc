@@ -92,6 +92,12 @@ SecureData DApp is a decentralized application (DApp) built using Next.js and Sh
 - **Zero-Knowledge Proofs (zk):** Provides privacy-preserving verification for identity documents and data without revealing the data itself.
 - **Data Verification Contracts:** Smart contracts for verifying identity and sensitive data.
 
+## Live Deployment
+We have successfully deployed the SecureData DApp on Fleek, a decentralized web hosting platform.
+
+**Live DApp URL:** https://securedata-dapp.fleek.co
+Visit the live platform to explore the e-identity management and data verification features in action. Fleek ensures decentralized hosting for the DApp, maintaining high availability and scalability with seamless integration into the Web3 ecosystem.
+
 ## Potential Integrations
 
 - **Government Services:** Integration with platforms for secure identity verification.
