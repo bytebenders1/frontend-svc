@@ -95,7 +95,7 @@ SecureData DApp is a decentralized application (DApp) built using Next.js and Sh
 ## Live Deployment
 We have successfully deployed the SecureData DApp on Fleek, a decentralized web hosting platform.
 
-**Live DApp URL:** https://securedata-dapp.fleek.co
+**Live DApp URL:** <https://secure-data.on-fleek.app>
 Visit the live platform to explore the e-identity management and data verification features in action. Fleek ensures decentralized hosting for the DApp, maintaining high availability and scalability with seamless integration into the Web3 ecosystem.
 
 ## Potential Integrations
