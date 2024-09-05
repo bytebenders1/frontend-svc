@@ -88,10 +88,10 @@ export const columns: ColumnDef<DataRecord>[] = [
       <div className="capitalize flex items-center gap-3">
         <Image src={file} alt="file" width={30} height={30} />
         <div
-          className="w-[150px] overflow-hidden cursor-pointer"
-          onClick={() =>
-            navigator.clipboard.writeText(row.getValue("filename"))
-          }
+          className="w-[150px] overflow-hidden"
+          // onClick={() =>
+          //   navigator.clipboard.writeText(row.getValue("filename"))
+          // }
         >
           <p className="text-sm text-secondary">{row.getValue("filename")}</p>
           {/* @ts-ignore */}
@@ -129,7 +129,7 @@ export const columns: ColumnDef<DataRecord>[] = [
     cell: ({ row }) => {
       return (
         <div
-          className="text-sm text-secondary w-[150px] shrink-0 overflow-hidden"
+          className="text-sm text-secondary w-[150px] shrink-0 cursor-pointer overflow-hidden"
           onClick={() =>
             navigator.clipboard.writeText(row.original.encryptedSecret)
           }
@@ -184,10 +184,7 @@ export const columns: ColumnDef<DataRecord>[] = [
   },
 ];
 
-export function DataTableDemo() {
-  const { data: userHashes, isLoading, isFetching } = useGetUserDataHashes();
-
-  console.log({ userHashes });
+export function DataTableDemo({ userHashes }: { userHashes: DataRecord[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
