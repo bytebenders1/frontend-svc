@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 import parseError from "../lib/parseErrorr";
 import { STORAGE_KEY } from "../lib/types/constant";
+import { localhost } from "viem/chains";
 
 export const CLIENT = axios.create({
   baseURL: CONFIG.API_BASE_URL,
@@ -39,15 +40,14 @@ CLIENT.interceptors.response.use(
   },
   async function (error) {
     // Do something with response error
-    // if (error?.response?.request?.status === 401) {
-    //   // console.log('error 401', error?.response?.request?.status)
-    //   useUserStore.getState().logout()
-    //   Service.AuthService.logout()
-    //   toast.error('Logged out!')
-    //   window.location.href = '/'
-    // }
     const { errorMessage, id } = parseError(error);
     toast.error(errorMessage);
+    if (error?.response?.request?.status === 401) {
+      // console.log('error 401', error?.response?.request?.status)
+      localStorage.removeItem(`${STORAGE_KEY}_details`);
+      // toast.error("Logged out!");
+      window.location.href = "/login";
+    }
 
     return Promise.reject(error);
   }

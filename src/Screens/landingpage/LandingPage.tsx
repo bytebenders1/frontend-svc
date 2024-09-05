@@ -238,7 +238,7 @@ function LandingPage() {
 
               <div className="">
                 <Image
-                  src={"/images/laptop.png"}
+                  src={"/images/laptop.svg"}
                   alt="Person working on a laptop"
                   width={600}
                   height={400}
