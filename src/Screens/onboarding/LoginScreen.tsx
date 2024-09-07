@@ -108,7 +108,7 @@ function SignUp(props: any) {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Enter your email"
+                    placeholder="Enter your username"
                     {...field}
                     type="text"
                     // leftIcon={<Sms size="20" variant="Bold" color="gray" />}
@@ -192,7 +192,7 @@ function Login() {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Enter your email"
+                    placeholder="Enter your username"
                     {...field}
                     // leftIcon={<Sms size="20" variant="Bold" color="gray" />}
                     className="!rounded-lg"
