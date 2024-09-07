@@ -266,11 +266,11 @@ function DataManagementUpload() {
               </div>
             ))}
           </div>
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <Button className="h-12 w-full md:w-8/12 md:mx-auto mt-6">
               Submit
             </Button>
-          </div>
+          </div> */}
         </>
       )}
       {uploadedFiles.length === 0 && (
